@@ -31,25 +31,23 @@ export default function Login() {
 
       if (!email || !password) {
 
+        setLoading(false);
         return Alert.alert('Atenção', 'Digite o Email e a Password!');
-
       }
 
       setTimeout(() => {
+        setLoading(false);
         if (email !== 'benjamimrinel192@gmail.com' || password !== '1234') {
-
           return Alert.alert('Acesso não autorizado!', 'Palavra passe ou email incorreto!');
         } else {
 
           Alert.alert('Logado', 'Login realizado com sucesso');
         }
-        setLoading(false);
+
       }, 3000);
 
     } catch (error) {
       Alert.alert('Erro', 'Ocorreu um erro inexperado');
-    } finally {
-      setLoading(false);
     }
   }
 
