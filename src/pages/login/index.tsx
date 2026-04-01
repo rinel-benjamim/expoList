@@ -5,7 +5,8 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
-  Alert
+  Alert,
+  ActivityIndicator
 } from 'react-native';
 
 import {
@@ -21,18 +22,34 @@ import { themes } from "../../global/themes";
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  function getLogin() {
+  async function getLogin() {
+    setLoading(true);
+
     try {
+
       if (!email || !password) {
+
         return Alert.alert('Atenção', 'Digite o Email e a Password!');
-      } else if (email !== 'benjamimrinel192@gmail.com' || password !== '1234') {
-        return Alert.alert('Acesso não autorizado!', 'Palavra passe ou email incorreto!');
+
       }
 
-      Alert.alert('Logado', 'Login realizado com sucesso');
+      setTimeout(() => {
+        if (email !== 'benjamimrinel192@gmail.com' || password !== '1234') {
+
+          return Alert.alert('Acesso não autorizado!', 'Palavra passe ou email incorreto!');
+        } else {
+
+          Alert.alert('Logado', 'Login realizado com sucesso');
+        }
+        setLoading(false);
+      }, 3000);
+
     } catch (error) {
       Alert.alert('Erro', 'Ocorreu um erro inexperado');
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -71,7 +88,13 @@ export default function Login() {
           style={style.button}
           onPress={() => getLogin()}
         >
-          <Text style={style.textButton}>Entrar</Text>
+          {
+            loading ?
+              <ActivityIndicator size="small" color={'white'} />
+              :
+              <Text style={style.textButton}>Entrar</Text>
+          }
+
         </TouchableOpacity>
       </View>
       <Text style={style.TextBotton}>Não tem conta? <Text style={{ color: themes.colors.primary }}>Crie agora!</Text></Text>
